@@ -36,6 +36,12 @@ model_path = Path('./model_files/model.pkl')
 with open(model_path):
     joblib.dump(model,model_path)
 
+# convert numpy arrays to list for json serialization
+model.__dict__['coef_'] = model.__dict__['coef_'].flatten().tolist() #ndarray: flatten first
+model.__dict__['_residues'] = model.__dict__['_residues'].tolist()
+model.__dict__['singular_'] = model.__dict__['singular_'].tolist()
+model.__dict__['intercept_'] = model.__dict__['intercept_'].tolist()
+
 mod_obj = RegressionModel(model_id='m1001',
                           timestamp=datetime.datetime.today(),
                           feature_names=X_train.columns.to_list(),
@@ -43,8 +49,11 @@ mod_obj = RegressionModel(model_id='m1001',
                           stored_path=model_path,
                           params=model.__dict__)
 
-print(mod_obj.schema_json())
+json_file = mod_obj.json()
+with open('./model_files/model.json','w+') as jpath:
+    jpath.write(json_file)
 
+print(mod_obj.schema_json())
 ## run python3 model.py > schema.json
 
 
