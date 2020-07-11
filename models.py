@@ -4,9 +4,9 @@ import typing
 from pathlib import Path
 import datetime
 
-__all__ =['RegressionModel']
+__all__ =['RegressionMeta']
 
-class RegressionModel(BaseModel):
+class RegressionMeta(BaseModel):
     model_id: str
     model_type = 'Linear Regression'
     timestamp: datetime.datetime

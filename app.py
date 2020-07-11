@@ -6,13 +6,7 @@ import joblib
 from pathlib import Path
 import os
 import sys
-
-# local import: import ModelClass Object created in models.py
-cwd= os.getcwd()
-sys.path.append(f'{cwd}/models.py')
-
-from models import RegressionModel
-
+from models import RegressionMeta
 
 diabetes = datasets.load_diabetes()
 xdf = pd.DataFrame(diabetes.data,columns=diabetes.feature_names)
@@ -23,7 +17,7 @@ X_train, X_test, y_train, y_test = train_test_split(xdf, ydf, test_size=0.2, ran
 model = linear_model.LinearRegression()
 model.fit(X_train, y_train)
 
-model_path = Path('./model_files/model.pkl')
+model_path = Path('{}/model_files/model.pkl'.format(Path(__file__).parent))
 
 with open(model_path):
     joblib.dump(model,model_path)
@@ -34,7 +28,7 @@ model.__dict__['_residues'] = model.__dict__['_residues'].tolist()
 model.__dict__['singular_'] = model.__dict__['singular_'].tolist()
 model.__dict__['intercept_'] = model.__dict__['intercept_'].tolist()
 
-mod_obj = RegressionModel(model_id='m1001',
+mod_obj = RegressionMeta(model_id='m1001',
                           timestamp=datetime.datetime.today(),
                           feature_names=X_train.columns.to_list(),
                           random_seed=None,
@@ -42,10 +36,12 @@ mod_obj = RegressionModel(model_id='m1001',
                           params=model.__dict__)
 
 json_file = mod_obj.json()
-with open('./model_files/model.json','w+') as jpath:
+json_path = Path('{}/model_files/model.json'.format(Path(__file__).parent))
+
+with open(json_path,'w+') as jpath:
     jpath.write(json_file)
 
 print(mod_obj.schema_json())
-## run python3 model.py > schema.json
+## run python3 app.py > schema.json
 
 
