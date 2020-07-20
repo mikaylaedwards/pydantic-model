@@ -1,20 +1,19 @@
 import json
+import os
 from pathlib import Path
 from models import RegressionMeta
 from sklearn.linear_model import LinearRegression
 
 
-__file__ = '/home/mikayla/Documents/pydantic-model/deserialize.py'
+__file__ = '{}/deserialize.py'.format(os.getcwd())
 
 PARENT_DIRECTORY = Path(__file__).parent
 
 model_json = Path('{}/model_files/model.json'.format(PARENT_DIRECTORY))
 with open(model_json) as m:
     model_dict = json.load(m)
-# construct, parse_file, parse_raw
 
 rm = RegressionMeta.parse_obj(model_dict)
-print(rm.params)
 
 # TO-DO: Write class to override constructor of LinearRegression
 # TO-DO: Add req args to json 
