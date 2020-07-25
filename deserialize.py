@@ -8,8 +8,6 @@ from contextlib import redirect_stdout
 import pprint
 
 
-__file__ = '{}/deserialize.py'.format(os.getcwd())
-
 MODEL_FILES_PATH = Path(__file__).parent / 'model_files'
 
 
@@ -33,7 +31,7 @@ class RegressionLoader(LinearRegression):
         LinearRegression construcor and passesthem to current class as keyword
         args.
 
-        @param: model_json: json file with serialized model data
+        @param: model_json: path to json file containing serialized model data
         """
         with open(model_json) as m:
             model_json = json.load(m)
@@ -47,11 +45,10 @@ class RegressionLoader(LinearRegression):
         # print(non_req_args_)
         return cls(non_req_args_, **req_args_)
 
+# call class method to create instance of RegressionLoader from model.json
+model = RegressionLoader.from_json(model_json = Path(f'{MODEL_FILES_PATH}/model.json'))
 
-model_json = Path(f'{MODEL_FILES_PATH}/model.json')
-
-model = RegressionLoader.from_json(model_json=model_json)
-
+# redirect outputs of deserialization (reconstructed object) to txt file in model artifacts directory
 with open(f'{MODEL_FILES_PATH}/deserialize_results.txt', 'w') as f:
     with redirect_stdout(f):
         print('Model parameters:')
