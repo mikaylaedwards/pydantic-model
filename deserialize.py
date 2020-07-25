@@ -24,12 +24,15 @@ class RegressionLoader(LinearRegression):
   
     @classmethod
     def from_json(cls, model_json):
-        """
+        """  Loads in json file containing the serialized 
+             RegressionMeta class converted to json in serialize.py. To address
+
         @param: model_json: json file with serialized model data
         """
         with open(model_json) as m:
-            model_dict = json.load(m)
-        meta = RegressionMeta.parse_obj(model_dict)
+            model_json = json.load(m)
+        # re-construct instance of RegressionMeta from json
+        meta = RegressionMeta.parse_obj(model_json)
         required_args = get_default_args(LinearRegression.__init__)
         req_args_ = {k:v for (k,v) in meta.params.items() if k in required_args}
         non_req = {k:v for (k,v) in meta.params.items() if k not in required_args}
