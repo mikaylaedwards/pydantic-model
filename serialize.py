@@ -42,14 +42,14 @@ mod_obj = RegressionMeta(model_id='m1001',
 json_file = mod_obj.json()
 json_path = Path('{}/model_files/model.json'.format(PARENT_DIRECTORY))
 
-with open(json_path,'w+'):
-    json_path.write(json_file)
+with open(json_path,'w+') as jp:
+    jp.write(json_file)
 
 schema_file = mod_obj.schema_json()
 schema_path = Path('{}/model_files/schema.json'.format(PARENT_DIRECTORY))
 
-with open(schema_path,'w+'):
-    json_path.write(json_file)
+with open(schema_path,'w+') as sp:
+    sp.write(schema_file)
 
 
 
