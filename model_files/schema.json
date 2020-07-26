@@ -1,5 +1,5 @@
 {
-    "title": "RegressionModel",
+    "title": "RegressionMeta",
     "type": "object",
     "properties": {
         "model_id": {

@@ -26,7 +26,7 @@ model_path = Path('{}/model_files/model.pkl'.format(PARENT_DIRECTORY))
 with open(model_path):
     joblib.dump(model,model_path)
 
-# convert numpy arrays to list for json serialization
+## convert numpy arrays to list for json serialization
 model.__dict__['coef_'] = model.__dict__['coef_'].flatten().tolist() #ndarray: flatten first
 model.__dict__['_residues'] = model.__dict__['_residues'].tolist()
 model.__dict__['singular_'] = model.__dict__['singular_'].tolist()
@@ -39,13 +39,13 @@ mod_obj = RegressionMeta(model_id='m1001',
                           stored_path=model_path,
                           params=model.__dict__)
 
-json_file = mod_obj.json()
+json_file = mod_obj.json(indent = 4)
 json_path = Path('{}/model_files/model.json'.format(PARENT_DIRECTORY))
 
 with open(json_path,'w+') as jp:
     jp.write(json_file)
 
-schema_file = mod_obj.schema_json()
+schema_file = mod_obj.schema_json(indent = 4)
 schema_path = Path('{}/model_files/schema.json'.format(PARENT_DIRECTORY))
 
 with open(schema_path,'w+') as sp:
