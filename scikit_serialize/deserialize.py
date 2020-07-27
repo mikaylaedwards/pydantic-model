@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from models import RegressionMeta
+from meta_models import RegressionMeta
 from sklearn.linear_model import LinearRegression
 from utils import get_default_args
 from contextlib import redirect_stdout
