@@ -1,7 +1,7 @@
 joblib==0.16.0
 numpy==1.19.0
 pandas==1.0.5
-pydantic==1.6.1
+pydantic==1.6.2
 python-dateutil==2.8.1
 python-dotenv==0.14.0
 pytz==2020.1
